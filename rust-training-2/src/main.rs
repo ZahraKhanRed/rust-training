@@ -15,6 +15,7 @@ struct Location {
     x: u32,
     y: u32,
 }
+
 #[derive(Debug, PartialEq, Copy, Clone)]
 struct Grid(Location);
 
@@ -73,7 +74,7 @@ impl Robot {
             },
 
             _ => {
-                return Err(self.into().clone());
+                return Err(self.clone().into());
             }
         };
         Ok(())
@@ -211,7 +212,9 @@ mod tests {
             direction: Direction::North,
         };
 
-        robot.follows(&instructions, &Grid::new(Location { x: 5, y: 5 }));
+        robot
+            .follows(&instructions, &Grid::new(Location { x: 5, y: 5 }))
+            .unwrap();
 
         assert_eq!(robot, expected);
     }
